@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.dao.YuserDao">
+	<select id="queryOne" resultType="Yuser">
+		select id,password,farmingo,nickname,gender,photo,location,province,city,description,phone,shangshi from cm_yuser where phone=#{phone} and password=#{password}
+	</select>
+	
+	<insert id="insert">
+     insert into cm_yuser values (#{id},#{password},#{farmingo},#{nickname},#{gender},#{photo},#{location},#{province},#{city},#{description},#{phone},#{shangshi})
+     </insert>
+     
+	<update id="update">
+     	update cm_yuser set password=#{password},farmingo=#{farmingo},nickname=#{nickname},gender=#{gender},photo=#{photo},location=#{location},description=#{description} where id=#{id}
+     </update>
+     
+</mapper>

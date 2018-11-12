@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.dao.AlbumDao">
+	<resultMap id="resultMap" type="Album">
+		<id property="id" column="id"></id>
+		<result property="zthumbnail" column="zthumbnail"></result>
+		<result property="title" column="title"></result>
+		<result property="set_count" column="set_count"></result>
+		<result property="create_date" column="create_date"></result>
+		<result property="score" column="score"></result>
+		<result property="author" column="author"></result>
+		<result property="broadcast" column="broadcast"></result>
+		<result property="brief" column="brief"></result>
+		<collection property="children" ofType="Chapter">
+			<id property="id" column="cid"></id>
+			<result property="title" column="ctitle"></result>
+			<result property="download_url" column="download_url"></result>
+			<result property="size" column="size"></result>
+			<result property="duration" column="duration"></result>
+			<result property="album_id" column="album_id"></result>
+		</collection>
+	</resultMap>
+	<resultMap id="resuMap" type="Album">
+		<id property="id" column="id"></id>
+		<result property="zthumbnail" column="zthumbnail"></result>
+		<result property="title" column="title"></result>
+		<result property="set_count" column="set_count"></result>
+		<result property="create_date" column="create_date"></result>
+		<result property="score" column="score"></result>
+		<result property="author" column="author"></result>
+		<result property="broadcast" column="broadcast"></result>
+		<result property="brief" column="brief"></result>
+		<collection property="children" ofType="Chapter">
+			<id property="id" column="cid"></id>
+			<result property="title" column="ctitle"></result>
+			<result property="download_url" column="download_url"></result>
+			<result property="size" column="size"></result>
+			<result property="duration" column="duration"></result>
+			<result property="album_id" column="album_id"></result>
+		</collection>
+	</resultMap>
+	<select id="queryByPage" resultMap="resultMap">
+		 select a.id,a.zthumbnail,a.title,a.set_count,a.create_date,a.score,a.author,a.broadcast,a.brief,c.id cid,c.title ctitle,c.download_url,c.size,c.duration,c.album_id
+		 from cm_album a left join cm_chapter c
+		 on a.id=c.album_id
+		  limit #{start},#{rows}
+	</select>
+	<select id="queryTotals" resultType="long">
+			select count(id) from cm_album
+	</select>
+	<select id="queryAll" resultMap="resuMap">
+		 select a.id,a.zthumbnail,a.title,a.set_count,a.create_date,a.score,a.author,a.broadcast,a.brief,c.id cid,c.title ctitle,c.download_url,c.size,c.duration,c.album_id
+		 from cm_album a left join cm_chapter c
+		 on a.id=c.album_id
+	</select>
+	<insert id="insert">
+     	insert into cm_album values (#{id},#{zthumbnail},#{set_count},#{create_date},#{score},#{author},#{broadcast},#{brief},#{title})
+     </insert>
+	<select id="findOne" resultType="Album">
+		 select id,zthumbnail,title,set_count,create_date,score,author,broadcast,brief from cm_album where id=#{id}
+	</select>
+	<update id="updatecount">
+		update cm_album set set_count=#{set_count} where id=#{id}
+	</update>
+     
+
+</mapper>
